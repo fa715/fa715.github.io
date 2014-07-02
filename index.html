@@ -62,8 +62,8 @@ function checkTime(i) {
         var firstDate = new Date("July 15, 2011");
         var secondDate = new Date();
 
-        var diffDays = Math.round(Math.abs((firstDate.getTime() - secondDate.getTime()) / (oneDay)));
-        var diffWeeks = Math.round(diffDays / 7);
+        var diffDays = Math.floor(Math.abs((firstDate.getTime() - secondDate.getTime()) / (oneDay)));
+        var diffWeeks = Math.floor(diffDays / 7);
 
         document.getElementById('weeks').innerHTML = diffWeeks + ' weeks and ' + (diffDays % 7) + ' days';
 

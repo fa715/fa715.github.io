@@ -1,0 +1,83 @@
+<html>
+
+<head>
+	<style>
+		html{
+			font-size:16px;
+			height:100%;
+			color:white;
+		}
+		body {
+			background-color:#2c3e50;
+		}
+		#weeks, #clock, #friday{
+		display:block;
+		width:100%;
+		text-align:center;
+font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+   font-weight: 300;
+	font-size: 6em;
+	line-height: 6rem;
+	margin: 0 auto;
+		}
+		#clock{
+			margin-top:100px;
+			margin-bottom:50px;
+			color:black;
+		}
+		#friday{
+			margin-top:100px;
+			color:pink;
+		}
+		@media (max-width : 540px) {
+			#weeks, #clock, #friday{font-size:4em;}
+		}	
+	</style>
+</head>
+
+<body>
+    <script type="text/javascript">
+
+function startTime() {
+    var today=new Date();
+    var h=today.getHours();
+    var apm= h>12 ? "PM" : "AM";
+    var m=today.getMinutes();
+    var s=today.getSeconds();
+    if(h == 0) h = 12;
+    if(h > 12) h -= 12; 
+    m = checkTime(m);
+    s = checkTime(s);
+    document.getElementById('clock').innerHTML = h+":"+m+":"+s+" "+apm;
+    var t = setTimeout(function(){startTime()},500);
+}
+
+function checkTime(i) {
+    if (i<10) {i = "0" + i};  // add zero in front of numbers < 10
+    return i;
+}
+
+    window.onload = function() {
+        var oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+        var firstDate = new Date("July 15, 2011");
+        var secondDate = new Date();
+
+        var diffDays = Math.round(Math.abs((firstDate.getTime() - secondDate.getTime()) / (oneDay)));
+        var diffWeeks = Math.round(diffDays / 7);
+
+        document.getElementById('weeks').innerHTML = diffWeeks + ' weeks and ' + (diffDays % 7) + ' days';
+
+        if (secondDate.getDay() == 5) {
+            document.getElementById('friday').innerHTML = "TODAY IS " + diffWeeks + " WEEKS!";
+        }
+	startTime();
+    }
+    </script>
+
+    <div id="clock"></div>
+    <br><br>
+    <div id="weeks"></div>
+    <div id="friday"></div>
+</body>
+
+</html>

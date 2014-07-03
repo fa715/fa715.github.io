@@ -1,1 +1,127 @@
-hello world
+<html>
+
+
+
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+	<style>
+		html{
+			font-size:16px;
+			height:100%;
+			color:#2c3e50;
+		}
+		body {
+			background-color:black;
+		}
+		.chars{
+			display:inline;
+			color:#ecf0f1;
+		}
+		#weeks, #clock, #friday{
+		display:block;
+		width:35%;
+		text-align:left;
+font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+   font-weight: 300;
+	font-size: 5.5em;
+	line-height: 6rem;
+	margin-left:10px;
+		}
+		#clock{
+			margin-top:100px;
+			margin-bottom:50px;
+		}
+		#friday{
+			margin-top:100px;
+		}
+		#bg { position: fixed; top: 0; left: 0; z-index: -1;}
+.bgwidth { width: 100%; }
+.bgheight { height: 100%; }
+		@media (max-width : 780px) {
+			#weeks, #clock, #friday{text-align:left;font-size:5em;margin-left:10px;width:250px;color:#ecf0f1;}
+			#bg{margin-left: -150px;}
+			.chars{color:#ecf0f1;}
+		}	
+		@media (max-width : 540px) {
+		#weeks, #clock, #friday{text-align:center;margin:0 auto;width:100%;font-size:4em;}
+		#clock{margin-top:100px;}
+			#bg{margin-left: -350px;opacity:0.5;}
+
+			.chars{color:#ecf0f1;}
+		}
+		}	
+	</style>
+</head>
+
+<body>
+    <script type="text/javascript">
+
+$(window).load(function() {    
+
+
+});
+function startTime() {
+    var today=new Date();
+    var h=today.getHours();
+    var apm= h>12 ? "PM" : "AM";
+    var m=today.getMinutes();
+    var s=today.getSeconds();
+    if(h == 0) h = 12;
+    if(h > 12) h -= 12; 
+    m = checkTime(m);
+    s = checkTime(s);
+    document.getElementById('clock').innerHTML = h+'<div class="chars">:</div>'+m+'<div class="chars">:</div>'+s+" "+'<div class="chars">' + apm + '<div>';
+    var t = setTimeout(function(){startTime()},500);
+}
+
+function checkTime(i) {
+    if (i<10) {i = "0" + i};  // add zero in front of numbers < 10
+    return i;
+}
+
+    window.onload = function() {        
+    	var theWindow        = $(window),
+            $bg              = $("#bg"),
+            aspectRatio      = $bg.width() / $bg.height();
+
+        function resizeBg() {
+
+                if ( (theWindow.width() / theWindow.height()) < aspectRatio ) {
+                    $bg
+                        .removeClass()
+                        .addClass('bgheight');
+                } else {
+                    $bg
+                        .removeClass()
+                        .addClass('bgwidth');
+                }
+
+        }
+
+        theWindow.resize(resizeBg).trigger("resize");
+
+        var oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+        var firstDate = new Date("July 15, 2011");
+        var secondDate = new Date();
+
+        var diffDays = Math.floor(Math.abs((firstDate.getTime() - secondDate.getTime()) / (oneDay)));
+        var diffWeeks = Math.floor(diffDays / 7);
+
+        document.getElementById('weeks').innerHTML = diffWeeks + '<div class="chars"> weeks </div>' + (diffDays % 7) + '<div class="chars"> days</div>';
+
+        if (secondDate.getDay() == 5) {
+            document.getElementById('friday').innerHTML = 'TODAY IS <div class="chars">' + diffWeeks + '</div> WEEKS!';
+        }
+	startTime();
+    }
+    </script>
+	<img src="thefa2.jpg" id="bg" alt="">
+
+    <div id="clock"></div>
+    <br><br>
+    <div id="weeks"></div>
+    <div id="friday"></div>
+</body>
+
+</html>
